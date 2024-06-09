@@ -42,7 +42,7 @@ public class CheckThread extends Thread {
             }
             bot.getJda().retrieveUserById(reminder.getUserId()).queue(user -> {
                 user.openPrivateChannel().flatMap(channel -> {
-                    return channel.sendMessage("<@" + user.getId() + ">").addEmbeds(
+                    return channel.sendMessage("<@" + user.getId() + "> " + reminder.getMessage()).addEmbeds(
                             Bot.DEFAULT_BUILDER()
                                     .setColor(Color.GREEN)
                                     .setTitle(":alarm_clock: Deine Reminder ist stattgefunden")
