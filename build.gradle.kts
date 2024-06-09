@@ -19,7 +19,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
-    implementation("eu.koboo:en2do:2.3.0")
+    implementation("eu.koboo:en2do:2.3.9")
 
     implementation("com.fasterxml.jackson.core:jackson-core:2.17.1")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.1")
