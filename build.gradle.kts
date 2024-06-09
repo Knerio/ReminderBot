@@ -1,0 +1,38 @@
+plugins {
+    id("java")
+}
+
+group = "de.derioo"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+    maven("https://repo.derioo.de/releases")
+    maven("https://reposilite.koboo.eu/releases")
+}
+
+dependencies {
+    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+
+    implementation("eu.koboo:en2do:2.3.0")
+
+    implementation("com.fasterxml.jackson.core:jackson-core:2.17.1")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.17.1")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.17.1")
+
+    implementation("org.projectlombok:lombok:1.18.32")
+    annotationProcessor("org.projectlombok:lombok:1.18.32")
+    implementation("org.jetbrains:annotations:24.1.0")
+    implementation("org.jetbrains:annotations:24.1.0")
+
+    implementation("org.mongodb:mongodb-driver-sync:3.12.14")
+    implementation("com.cronutils:cron-utils:9.2.0")
+
+
+    implementation("net.dv8tion:JDA:5.0.0-beta.24")
+    implementation("de.derioo.javautils:common:2.4.1")
+}
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
