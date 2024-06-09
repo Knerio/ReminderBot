@@ -27,6 +27,7 @@ public class Main {
                     .db(System.getenv("MONGO_DB"))
                     .build();
         }
+
         MongoManager manager = new MongoManager(Credentials.of(config.getConnectionString(), config.getDb()));
         try {
             new Bot(config, manager);

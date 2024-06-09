@@ -1,5 +1,9 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+
 plugins {
     id("java")
+    id("io.github.goooler.shadow") version "8.1.7"
 }
 
 group = "de.derioo"
@@ -35,4 +39,13 @@ dependencies {
 }
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+tasks.named<ShadowJar>("shadowJar") {
+    archiveClassifier.set("")
+    manifest {
+        attributes(
+            "Main-Class" to "de.derioo.reminder.Main"
+        )
+    }
 }
