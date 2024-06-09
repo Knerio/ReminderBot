@@ -9,6 +9,8 @@ import lombok.Getter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +31,8 @@ public class Bot {
 
         jda = JDABuilder.create(config.getToken(), EnumSet.of(GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.MESSAGE_CONTENT))
                 .addEventListeners(new CommandListener(this, repository))
+                .setActivity(Activity.listening("Deine Reminders"))
+                .setStatus(OnlineStatus.ONLINE)
                 .build();
         jda.awaitReady();
 
