@@ -64,7 +64,7 @@ public class CommandListener extends ListenerAdapter {
                     builder.addField(new MessageEmbed.Field(":date: " + DateUtility.DATE_FORMAT.format(new Date(reminder.getNextExecution())),
                             ":speech_left: `" + reminder.getMessage() + " `\n" +
                                     (reminder.getCron() == null ? "" : ":safety_pin: " + reminder.getCron() + "\n")
-                                    + ":id:" + reminder.getId().toString(),
+                                    + ":id: " + reminder.getId().toString(),
                             false));
                 }
                 event.getMessage().replyEmbeds(builder.build()).queue();
