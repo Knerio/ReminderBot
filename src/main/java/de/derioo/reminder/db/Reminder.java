@@ -19,6 +19,7 @@ public class Reminder {
 
     String userId;
 
+    String cron;
 
     long nextExecution;
 

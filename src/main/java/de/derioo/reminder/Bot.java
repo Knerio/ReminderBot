@@ -36,11 +36,6 @@ public class Bot {
                 .build();
         jda.awaitReady();
 
-        jda.updateCommands().addCommands(
-                Commands.message("remind"),
-                Commands.message("remind-cron")
-        ).queue();
-
         new CheckThread(this).start();
 
     }
