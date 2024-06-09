@@ -15,6 +15,7 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.EnumSet;
 
@@ -42,7 +43,7 @@ public class Bot {
 
 
     public static EmbedBuilder DEFAULT_BUILDER() {
-        return new EmbedBuilder().setFooter("Gesendet am " + DateUtility.DATE_FORMAT.format(new Date()));
+        return new EmbedBuilder().setFooter("Gesendet am " + DateUtility.DATE_FORMAT.format(new Date(Calendar.getInstance().getTimeInMillis())));
     }
 
 }

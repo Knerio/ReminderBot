@@ -13,7 +13,9 @@ import lombok.extern.java.Log;
 import java.awt.*;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 @AllArgsConstructor
 @Log
@@ -27,7 +29,7 @@ public class CheckThread extends Thread {
         log.info("Checking reminders");
 
         for (Reminder reminder : new ArrayList<>(bot.getRepository().findAll())) {
-            if (reminder.getNextExecution() > System.currentTimeMillis()) continue;
+            if (reminder.getNextExecution() > Calendar.getInstance().getTimeInMillis()) continue;
             if (reminder.getCron() == null) {
                 bot.getRepository().deleteById(reminder.getId());
             } else {
