@@ -9,10 +9,12 @@ import lombok.extern.java.Log;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.TimeZone;
 
 @Log
 public class Main {
     public static void main(String[] args) {
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
         ObjectMapper mapper = new ObjectMapper();
 
         BotConfig config = null;
