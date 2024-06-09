@@ -1,16 +1,17 @@
 package de.derioo.reminder.check;
 
-import com.fasterxml.jackson.databind.util.ArrayIterator;
+import com.cronutils.model.CronType;
+import com.cronutils.model.definition.CronDefinitionBuilder;
+import com.cronutils.model.time.ExecutionTime;
+import com.cronutils.parser.CronParser;
 import de.derioo.javautils.common.DateUtility;
 import de.derioo.reminder.Bot;
 import de.derioo.reminder.db.Reminder;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.channel.concrete.PrivateChannel;
-import net.dv8tion.jda.api.requests.restaction.CacheRestAction;
 
 import java.awt.*;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -27,7 +28,18 @@ public class CheckThread extends Thread {
 
         for (Reminder reminder : new ArrayList<>(bot.getRepository().findAll())) {
             if (reminder.getNextExecution() > System.currentTimeMillis()) continue;
-            bot.getRepository().deleteById(reminder.getId());
+            if (reminder.getCron() == null) {
+                bot.getRepository().deleteById(reminder.getId());
+            } else {
+                try {
+                    reminder.setNextExecution(ExecutionTime.forCron(new CronParser(CronDefinitionBuilder.instanceDefinitionFor(CronType.UNIX)).parse(reminder.getCron())).nextExecution(ZonedDateTime.now()).get().toInstant().toEpochMilli());
+                    bot.getRepository().save(reminder);
+                } catch (Exception e) {
+                    log.severe("Error occured");
+                    e.printStackTrace();
+                    continue;
+                }
+            }
             bot.getJda().retrieveUserById(reminder.getUserId()).queue(user -> {
                 user.openPrivateChannel().flatMap(channel -> {
                     return channel.sendMessage("<@" + user.getId() + ">").addEmbeds(
@@ -42,7 +54,7 @@ public class CheckThread extends Thread {
         }
 
         try {
-            Thread.sleep(30_000);
+            Thread.sleep(10_000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
