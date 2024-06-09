@@ -85,7 +85,7 @@ public class CommandListener extends ListenerAdapter {
                     return;
                 }
                 event.getMessage().replyEmbeds(Bot.DEFAULT_BUILDER()
-                        .setTitle(":white_check_mark: Erfolgreich gelöscht")
+                        .setTitle(":white_check_mark: Erfolgreich entfernt")
                         .setColor(Color.GREEN)
                         .setDescription(
                                 "\n`" + reminder.getMessage() + "` \n" +
