@@ -12,10 +12,7 @@ import lombok.extern.java.Log;
 
 import java.awt.*;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
+import java.util.*;
 
 @AllArgsConstructor
 @Log
@@ -25,41 +22,40 @@ public class CheckThread extends Thread {
 
     @Override
     public void run() {
+        Timer timer = new Timer();
 
-        log.info("Checking reminders");
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                log.info("Checking reminders");
 
-        for (Reminder reminder : new ArrayList<>(bot.getRepository().findAll())) {
-            if (reminder.getNextExecution() > Calendar.getInstance().getTimeInMillis()) continue;
-            if (reminder.getCron() == null) {
-                bot.getRepository().deleteById(reminder.getId());
-            } else {
-                try {
-                    reminder.setNextExecution(ExecutionTime.forCron(new CronParser(CronDefinitionBuilder.instanceDefinitionFor(CronType.UNIX)).parse(reminder.getCron())).nextExecution(ZonedDateTime.now()).get().toInstant().toEpochMilli());
-                    bot.getRepository().save(reminder);
-                } catch (Exception e) {
-                    log.severe("Error occured");
-                    e.printStackTrace();
-                    continue;
+                for (Reminder reminder : new ArrayList<>(bot.getRepository().findAll())) {
+                    if (reminder.getNextExecution() > Calendar.getInstance().getTimeInMillis()) continue;
+                    if (reminder.getCron() == null) {
+                        bot.getRepository().deleteById(reminder.getId());
+                    } else {
+                        try {
+                            reminder.setNextExecution(ExecutionTime.forCron(new CronParser(CronDefinitionBuilder.instanceDefinitionFor(CronType.UNIX)).parse(reminder.getCron())).nextExecution(ZonedDateTime.now()).get().toInstant().toEpochMilli());
+                            bot.getRepository().save(reminder);
+                        } catch (Exception e) {
+                            log.severe("Error occured");
+                            e.printStackTrace();
+                            continue;
+                        }
+                    }
+                    bot.getJda().retrieveUserById(reminder.getUserId()).queue(user -> {
+                        user.openPrivateChannel().flatMap(channel -> {
+                            return channel.sendMessage("<@" + user.getId() + "> " + reminder.getMessage()).addEmbeds(
+                                    Bot.DEFAULT_BUILDER()
+                                            .setColor(Color.GREEN)
+                                            .setTitle(":alarm_clock: Deine Reminder ist stattgefunden")
+                                            .setDescription(":speech_left: `" + reminder.getMessage() + "`\n:date: " + DateUtility.DATE_FORMAT.format(new Date(reminder.getNextExecution())))
+                                            .build()
+                            );
+                        }).queue();
+                    });
                 }
             }
-            bot.getJda().retrieveUserById(reminder.getUserId()).queue(user -> {
-                user.openPrivateChannel().flatMap(channel -> {
-                    return channel.sendMessage("<@" + user.getId() + "> " + reminder.getMessage()).addEmbeds(
-                            Bot.DEFAULT_BUILDER()
-                                    .setColor(Color.GREEN)
-                                    .setTitle(":alarm_clock: Deine Reminder ist stattgefunden")
-                                    .setDescription(":speech_left: `" + reminder.getMessage() + "`\n:date: " + DateUtility.DATE_FORMAT.format(new Date(reminder.getNextExecution())))
-                                    .build()
-                    );
-                }).queue();
-            });
-        }
-
-        try {
-            Thread.sleep(10_000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        run();
+        }, 5_000, 5_000);
     }
 }
