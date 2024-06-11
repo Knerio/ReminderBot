@@ -1,7 +1,5 @@
 package de.derioo.reminder;
 
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import de.derioo.shadow.jackson.core.JsonGenerator;
 import de.derioo.shadow.jackson.databind.ObjectMapper;
 import eu.koboo.en2do.Credentials;
 import eu.koboo.en2do.MongoManager;
