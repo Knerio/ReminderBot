@@ -1,7 +1,7 @@
 package de.derioo.reminder;
 
 import de.derioo.javautils.common.DateUtility;
-import de.derioo.reminder.check.CheckThread;
+import de.derioo.reminder.db.Reminder;
 import de.derioo.reminder.db.ReminderRepository;
 import de.derioo.reminder.listener.CommandListener;
 import eu.koboo.en2do.MongoManager;
@@ -11,7 +11,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +28,7 @@ public class Bot {
 
     public Bot(@NotNull BotConfig config, MongoManager manager) throws InterruptedException {
         repository = manager.create(ReminderRepository.class);
+        Reminder.setBot(this);
 
         jda = JDABuilder.create(config.getToken(), EnumSet.of(GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.MESSAGE_CONTENT))
                 .addEventListeners(new CommandListener(this, repository))
@@ -37,8 +37,7 @@ public class Bot {
                 .build();
         jda.awaitReady();
 
-        new CheckThread(this).start();
-
+        repository.findAll(); //load all to call the constructor in the reminder
     }
 
 
