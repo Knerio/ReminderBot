@@ -30,7 +30,7 @@ dependencies {
     implementation("org.jetbrains:annotations:24.1.0")
     implementation("org.jetbrains:annotations:24.1.0")
 
-    implementation("org.mongodb:mongodb-driver-sync:3.12.14")
+    implementation("org.mongodb:mongodb-driver-sync:5.1.0")
     implementation("com.cronutils:cron-utils:9.2.1")
 
 
