@@ -26,7 +26,7 @@ public class Bot {
     private final JDA jda;
 
 
-    public Bot(@NotNull BotConfig config, MongoManager manager) throws InterruptedException {
+    public Bot(@NotNull BotConfig config, @NotNull MongoManager manager) throws InterruptedException {
         repository = manager.create(ReminderRepository.class);
         Reminder.setBot(this);
 
