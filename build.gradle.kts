@@ -34,8 +34,9 @@ dependencies {
     implementation("com.cronutils:cron-utils:9.2.1")
 
 
-    implementation("net.dv8tion:JDA:5.0.0-beta.24")
-    implementation("de.derioo.javautils:common:2.4.1")
+    implementation("net.dv8tion:JDA:5.0.0-alpha.22")
+    implementation("de.derioo.javautils:common:2.6.10")
+    implementation("de.derioo.javautils:discord:2.6.10")
 }
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)

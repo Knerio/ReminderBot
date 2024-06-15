@@ -5,6 +5,7 @@ import eu.koboo.en2do.Credentials;
 import eu.koboo.en2do.MongoManager;
 import lombok.extern.java.Log;
 
+import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
 import java.util.TimeZone;
@@ -31,7 +32,7 @@ public class Main {
         MongoManager manager = new MongoManager(Credentials.of(config.getConnectionString(), config.getDb()));
         try {
             new Bot(config, manager);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | LoginException e) {
             throw new RuntimeException(e);
         }
     }
