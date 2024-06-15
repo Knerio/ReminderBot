@@ -39,6 +39,7 @@ public class DefaultCommand {
 
 
     public void defaultCommand(@NotNull MessageReceivedEvent event, @NotNull Throwable throwable) {
+        if (event.getAuthor().isBot()) return;
         event.getMessage().replyEmbeds(Bot.DEFAULT_BUILDER()
                 .setColor(Color.RED)
                 .setTitle(":x: Ein Fehler ist aufgetreten")

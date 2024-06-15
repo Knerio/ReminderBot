@@ -35,8 +35,8 @@ dependencies {
 
 
     implementation("net.dv8tion:JDA:5.0.0-alpha.22")
-    implementation("de.derioo.javautils:common:2.6.10")
-    implementation("de.derioo.javautils:discord:2.6.10")
+    implementation("de.derioo.javautils:common:2.6.15")
+    implementation("de.derioo.javautils:discord:2.6.15")
 }
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
