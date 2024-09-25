@@ -27,8 +27,8 @@ dependencies {
 
     implementation("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
-    implementation("org.jetbrains:annotations:24.1.0")
-    implementation("org.jetbrains:annotations:24.1.0")
+    implementation("org.jetbrains:annotations:25.0.0")
+    implementation("org.jetbrains:annotations:25.0.0")
 
     implementation("org.mongodb:mongodb-driver-sync:5.1.1")
     implementation("com.cronutils:cron-utils:9.2.1")
