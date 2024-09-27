@@ -22,7 +22,7 @@ dependencies {
     implementation("eu.koboo:en2do:2.3.9")
 
     implementation("com.fasterxml.jackson.core:jackson-core:2.17.2")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.17.1")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.0")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.17.2")
 
     implementation("org.projectlombok:lombok:1.18.34")
