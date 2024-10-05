@@ -34,7 +34,7 @@ dependencies {
     implementation("com.cronutils:cron-utils:9.2.1")
 
 
-    implementation("net.dv8tion:JDA:5.0.0-beta.24")
+    implementation("net.dv8tion:JDA:5.1.2")
     implementation("de.derioo.javautils:common:2.7.1")
     implementation("de.derioo.javautils:discord:2.7.1")
 }
